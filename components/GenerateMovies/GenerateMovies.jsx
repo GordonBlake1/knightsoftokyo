@@ -12,7 +12,8 @@ function GenerateMovies({ startYear, endYear }) {
 
   const generateMoviesInRange = (start, end) => {
     const filteredMovies = movies.filter(
-      (movie) => movie.year >= start && movie.year <= end,
+      (movie) =>
+        movie.year >= start && movie.year <= end && Number(movie.rating) >= 5, // Filter out ratings below 5
     );
 
     const groupedMovies = filteredMovies.reduce((acc, movie) => {
@@ -26,12 +27,12 @@ function GenerateMovies({ startYear, endYear }) {
       return acc;
     }, {});
 
-    // Sort movie titles within each year and rating group in descending order
+    // Sort movie titles within each year and rating group
     Object.values(groupedMovies).forEach((yearGroup) => {
       Object.keys(yearGroup)
-        .sort((a, b) => b - a)
+        .sort((a, b) => Number(b) - Number(a)) // Convert strings to numbers for proper comparison
         .forEach((rating) => {
-          yearGroup[rating].sort((a, b) => b.title.localeCompare(a.title));
+          yearGroup[rating].sort((a, b) => a.title.localeCompare(b.title)); // Sort by title
         });
     });
 
@@ -44,26 +45,26 @@ function GenerateMovies({ startYear, endYear }) {
         <div key={year} className={styles.yearCard}>
           <p className={styles.movieYear}>{year}</p>
           {Object.entries(yearGroup)
-            .sort(([ratingA], [ratingB]) => ratingB - ratingA)
+            .sort(([ratingA], [ratingB]) => Number(ratingB) - Number(ratingA)) // Convert ratings to numbers
             .map(([rating, ratingGroup]) => (
               <div key={rating}>
                 {ratingGroup.map((movie) => (
                   <p
-                    key={movie.id}
+                    key={movie.title} // Use movie title as key if no unique id is available
                     className={styles.movieTitle}
                     style={{
                       color:
-                        movie.rating === 5
+                        movie.rating === '5'
                           ? '#4f4f4f'
-                          : movie.rating === 6
+                          : movie.rating === '6'
                           ? '#cc33cc'
-                          : movie.rating === 7
+                          : movie.rating === '7'
                           ? '#3366ff'
-                          : movie.rating === 8
+                          : movie.rating === '8'
                           ? '#33cc00'
-                          : movie.rating === 9
+                          : movie.rating === '9'
                           ? '#ff6600'
-                          : movie.rating === 10
+                          : movie.rating === '10'
                           ? '#cc0000'
                           : 'inherit',
                     }}

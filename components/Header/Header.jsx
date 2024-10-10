@@ -1,6 +1,6 @@
-"use client";
-import Link from "next/link";
-import styles from "./Header.module.css";
+'use client';
+import Link from 'next/link';
+import styles from './Header.module.css';
 
 const Header = () => {
   return (
@@ -8,7 +8,7 @@ const Header = () => {
       <div className={styles.header}>
         <div className={styles.headerTitle}>
           <Link href="/" rel="noopener noreferrer">
-            St. Gordon&apos;s Gallery of Favorites
+            KnightsofTokyo&apos;s Gallery of Favorites
           </Link>
         </div>
       </div>
